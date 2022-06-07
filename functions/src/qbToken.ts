@@ -7,6 +7,7 @@ type ITokenData = {
   accessToken: string;
   authorizationBasic: string;
   refreshToken: string;
+  realmId: string;
 };
 
 type IQBResponse = {
@@ -17,6 +18,7 @@ type IQBResponse = {
 export const refreshToken = async (): Promise<void> => {
   // Get Existing Tokens
   const tokens = await db.doc(TOKENS_PATH).get();
+  console.log('Refreshing Token');
   if (!tokens.exists) {
     await db.doc(TOKENS_PATH).set(
       {
@@ -66,6 +68,7 @@ export const refreshToken = async (): Promise<void> => {
         },
         { merge: true }
       );
+      console.log('Refreshed Token Successfully');
     }
   }
 };
